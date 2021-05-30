@@ -24,7 +24,7 @@ fi
 # Enable SPI
 if grep -q "dtparam=spi=off" "$File";
         then
-		sed -i '/dtparam=spi=off/d' "$File";
+		sed -i '/dtparam=spi=o/d' "$File";
 fi
 if grep -q "dtparam=spi=on" "$File";
         then
@@ -36,7 +36,7 @@ fi
 # Enable I2C
 if grep -q "dtparam=i2c_arm=off" "$File";
         then
-		sed -i '/dtparam=i2c_arm=off/d' "$File";
+		sed -i '/dtparam=i2c_arm=on/d' "$File";
 fi
 if grep -q "dtparam=i2c_arm=on" "$File";
         then

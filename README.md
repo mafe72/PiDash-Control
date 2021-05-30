@@ -29,7 +29,7 @@ You can setup this via SSH or using the command line interface in your RetroPie.
 
 Open your terminal and type the one-line installation command below:
 ```bash
-$ wget -O - "https://raw.githubusercontent.com/mafe72/PiDash-Control/raw/master/install.sh" | sudo bash
+wget -O - "https://raw.githubusercontent.com/mafe72/PiDash-Control/master/install.sh" | sudo bash
 ```
 
 The script will automatically install pertinent files and configure your Raspberry Pi to enable **PiDash-Control.**
@@ -47,7 +47,7 @@ You can setup this via SSH or using the command line interface in your RetroPie.
 
 Open your terminal and type the one-line installation command below:
 ```bash
-$ wget -O - "https://raw.githubusercontent.com/mafe72/PiDash-Control/raw/master/uninstall.sh" | sudo bash
+wget -O - "https://raw.githubusercontent.com/mafe72/PiDash-Control/master/uninstall.sh" | sudo bash
 ```
 
 The script will automatically uninstall all configuration files from your Raspberry Pi to disable the **PiDash-Control.**
