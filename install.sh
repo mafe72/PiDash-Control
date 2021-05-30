@@ -24,7 +24,7 @@ fi
 # Enable SPI
 if grep -q "dtparam=spi=off" "$File";
         then
-		sed -i '/dtparam=spi=o/d' "$File";
+		sed -i '/dtparam=spi=on/d' "$File";
 fi
 if grep -q "dtparam=spi=on" "$File";
         then
