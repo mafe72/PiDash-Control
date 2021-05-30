@@ -21,22 +21,10 @@ if grep -q "avoid_warnings=1" "$File";
                 echo "avoid_warnings=1" >> "$File"
                 echo "warnings disable."
 fi
-# Enable SPI
-if grep -q "dtparam=spi=off" "$File";
-        then
-		sed -i '/dtparam=spi=on/d' "$File";
-fi
-if grep -q "dtparam=spi=on" "$File";
-        then
-                echo "SPI already enabled. Doing nothing."
-        else
-                echo "dtparam=spi=on" >> "$File"
-                echo "SPI enabled."
-fi
 # Enable I2C
-if grep -q "dtparam=i2c_arm=off" "$File";
+if grep -q "#dtparam=i2c_arm=on" "$File";
         then
-		sed -i '/dtparam=i2c_arm=on/d' "$File";
+                sed -i '/dtparam=i2c_arm=on/d' "$File";
 fi
 if grep -q "dtparam=i2c_arm=on" "$File";
         then
@@ -44,6 +32,18 @@ if grep -q "dtparam=i2c_arm=on" "$File";
         else
                 echo "dtparam=i2c_arm=on" >> "$File"
                 echo "I2C enabled."
+fi
+# Enable SPI
+if grep -q "#dtparam=spi=on" "$File";
+        then
+                sed -i '/dtparam=spi=on/d' "$File";
+fi
+if grep -q "dtparam=spi=on" "$File";
+        then
+                echo "SPI already enabled. Doing nothing."
+        else
+                echo "dtparam=spi=on" >> "$File"
+                echo "SPI enabled."
 fi
 # Update repository
 sudo apt-get update -y
