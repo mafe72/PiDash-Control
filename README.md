@@ -1,5 +1,5 @@
 # PiDash-Control
-This is a system info display with a button interface for soft-shutdown and reboot of the Raspberry Pi.
+This is a system info display with PWM fan control and a one-button interface for soft-shutdown and reboot of the Raspberry Pi.
 
 License
 -------
