@@ -10,7 +10,7 @@
 #  GPIO14 LED (OUTPUT)
 #  GPIO20 INFO_BTN (INPUT)
 #
-#####################################
+##################################### 
 #  Required libraries
 #  sudo apt-get install python3-pip python3-pil python-smbus python-gpiozero i2c-tools
 #  sudo pip3 install psutil pyserial adafruit-circuitpython-ssd1306
