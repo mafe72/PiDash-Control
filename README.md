@@ -83,6 +83,32 @@ After rebooting, your **PiDash-Control** will be fully deactivated.
 Basic Hardware Usage
 --------------------
 
+# Info Button Basic Usage:
+
+* Button Single Press
+			
+		Display show system information, IP, CPU load and current temperature and system uptime
+		
+* Button Hold 5 seconds
+		
+		System will reboot
+		
+* Button hold 10 seconds
+		
+		System wil soft-shutdown
+
+
+# Fan Control
+
+* FAN ON
+			
+		Fan will turn ON when temperature exceeded 55C
+		
+* FAN OFF
+		
+		Fan will turn OFF when temperature under 40C
+
+----------
 
 Basic Software Usage
 --------------------
