@@ -83,7 +83,7 @@ After rebooting, your **PiDash-Control** will be fully deactivated.
 Basic Hardware Usage
 --------------------
 
-## Info Button Basic Usage:
+### Info Button Basic Usage:
 
 * Button Single Press
 			
@@ -98,7 +98,7 @@ Basic Hardware Usage
 		System wil soft-shutdown
 
 
-## Fan Control
+### Fan Control
 
 * FAN ON
 			
