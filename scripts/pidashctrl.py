@@ -10,7 +10,7 @@
 #  GPIO14 LED (OUTPUT)
 #  GPIO20 INFO_BTN (INPUT)
 #
-##################################### 
+#####################################
 #  Required libraries
 #  sudo apt-get install python3-pip python3-pil python-smbus python-gpiozero i2c-tools
 #  sudo pip3 install psutil pyserial adafruit-circuitpython-ssd1306
@@ -41,23 +41,11 @@ from PIL import Image, ImageDraw, ImageFont
 import adafruit_ssd1306
 import psutil
 
-################################
+##### Pin configuration #########
 
-# Pin configuration
 FAN_CRTL = 4
 LED = 14
 INFO_BTN = 15
-
-################################
-
-# Fan control settings
-fan = GPIO.PWM(FAN_CRTL, 50) #PWM freauency set to 50Hz
-
-#Turn off fan when under
-minTEMP=40
-
-#Turn on fan when exceeded
-maxTEMP=55
 
 ################################
 
@@ -67,6 +55,15 @@ GPIO.setup(LED, GPIO.OUT)
 GPIO.setup(INFO_BTN, GPIO.IN)
 
 DISP_OFF = 0xAE
+
+# Fan control settings
+fan = GPIO.PWM(FAN_CRTL, 50) #PWM freauency set to 50Hz
+
+#Turn off fan when under
+minTEMP=40
+
+#Turn on fan when exceeded
+maxTEMP=55
 
 # Timer for Display timeout
 disp_timer = 0
@@ -131,9 +128,9 @@ GPIO.output(LED, GPIO.HIGH)
 
 # Startup Info
 draw.rectangle((0,0,width,height), outline=0, fill=0)
-draw.text((x, top),    "--------------------", font=font, fill=255)
+draw.text((x, top),    "-"*20, font=font, fill=255)
 draw.text((x, top+12), "   System Started   ", font=font, fill=255)
-draw.text((x, top+24), "--------------------", font=font, fill=255)
+draw.text((x, top+24), "-"*20, font=font, fill=255)
 disp.image(image)
 disp.show()
 
@@ -179,6 +176,8 @@ while True:
             IP = subprocess.check_output(cmd, shell = True)
             cmd = "vcgencmd measure_temp |cut -f 2 -d '='"
             SysTemp = subprocess.check_output(cmd, shell = True)
+            dskpct = psutil.disk_usage('/')
+            disk = str(dskpct.percent)
             #cmd = "df -h | awk '$NF=="/"{printf "(%s)\n", $5}'"
             #disk = subprocess.check_output(cmd, shell = True).decode(UTF-8)
             
