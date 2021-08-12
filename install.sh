@@ -6,43 +6,48 @@ if [[ $EUID -ne 0 ]]; then
    exit 1
 fi
 #-----------------------------------------------------------
+CNF=/boot/config.txt
+RC=/etc/rc.local
+DIR=/opt/PiDashControl
+script=/opt/PiDashControl/pidashctrl.py
+SourcePath=https://raw.githubusercontent.com/mafe72/PiDash-Control/master/scripts
 
-#Step 2) Enable required services and Update repository----------------------------------
-cd /boot/
-File=config.txt
-if grep -q "avoid_warnings=0" "$File";
+#-----------------------------------------------------------
+#Step 2) Enable required services and Update repository-----
+
+if grep -q "avoid_warnings=0" "$CNF";
         then
-		sed -i '/avoid_warnings=0/d' "$File";
+		sed -i '/avoid_warnings=0/d' "$CNF";
 fi
-if grep -q "avoid_warnings=1" "$File";
+if grep -q "avoid_warnings=1" "$CNF";
         then
                 echo "warnings already disable. Doing nothing."
         else
-                echo "avoid_warnings=1" >> "$File"
+                echo "avoid_warnings=1" >> "$CNF"
                 echo "warnings disable."
 fi
 # Enable I2C
-if grep -q "#dtparam=i2c_arm=on" "$File";
+if grep -q "#dtparam=i2c_arm=on" "$CNF";
         then
-                sed -i '/dtparam=i2c_arm=on/d' "$File";
+                sed -i '/dtparam=i2c_arm=on/d' "$CNF";
 fi
-if grep -q "dtparam=i2c_arm=on" "$File";
+if grep -q "dtparam=i2c_arm=on" "$CNF";
         then
                 echo "I2C already enabled. Doing nothing."
         else
-                echo "dtparam=i2c_arm=on" >> "$File"
+                echo "dtparam=i2c_arm=on" >> "$CNF"
                 echo "I2C enabled."
 fi
 # Enable SPI
-if grep -q "#dtparam=spi=on" "$File";
+if grep -q "#dtparam=spi=on" "$CNF";
         then
-                sed -i '/dtparam=spi=on/d' "$File";
+                sed -i '/dtparam=spi=on/d' "$CNF";
 fi
-if grep -q "dtparam=spi=on" "$File";
+if grep -q "dtparam=spi=on" "$CNF";
         then
                 echo "SPI already enabled. Doing nothing."
         else
-                echo "dtparam=spi=on" >> "$File"
+                echo "dtparam=spi=on" >> "$CNF"
                 echo "SPI enabled."
 fi
 # Update repository
@@ -55,39 +60,34 @@ sudo pip3 install psutil pyserial adafruit-circuitpython-ssd1306
 #-----------------------------------------------------------
 
 #Step 4) Download Python script-----------------------------
-cd /opt/
-sudo mkdir PiDashControl
-cd /opt/PiDashControl
-script=pidashctrl.py
+sudo mkdir $DIR
 
 if [ -e $script ];
 	then
-		echo "Script pidash_ctrl.py already exists. Updating..."
+		echo "Script already exists. Updating..."
 		rm $script
-		wget "https://raw.githubusercontent.com/mafe72/PiDash-Control/master/scripts/pidashctrl.py"
+		wget -O $script "$SourcePath/pidashctrl.py"
 		echo "Update complete."
 	else
-		wget "https://raw.githubusercontent.com/mafe72/PiDash-Control/master/scripts/pidashctrl.py"
-        echo "Download  complete."
+		wget -O $script "$SourcePath/pidashctrl.py"
+        	echo "Download  complete."
 fi
 #-----------------------------------------------------------
 
 #Step 5) Enable Python script to run on start up------------
-cd /etc/
-RC=rc.local
-
 #Adding new configuration----------- 
 if grep -q "sudo python3 \/opt\/PiDashControl\/pidashctrl.py \&" "$RC";
 	then
-		echo "File /etc/rc.local already configured. Doing nothing."
+		echo "Auto start  already configured. Doing nothing."
 	else
 		sed -i -e "s/^exit 0/sudo python3 \/opt\/PiDashControl\/pidashctrl.py \&\n&/g" "$RC"
-		echo "File /etc/rc.local configured."
+		echo "Auto start configured."
 fi
+
 #-----------------------------------------------------------
 
 #Step 6) Reboot to apply changes----------------------------
-echo "PiDash Control installation done. Will now reboot after 3 seconds."
+echo "PiDash Control installation completed. Rebooting after 3 seconds."
 sleep 4
 sudo reboot
 #-----------------------------------------------------------
