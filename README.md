@@ -10,7 +10,27 @@ the Creative Commons Foundation (https://creativecommons.org/licenses/by-nc-sa/4
 
 Features
 --------
+* Small footprint
 
+* Easy Temperature Control
+
+* PWM fan control
+
+* I2C 0.91 inch OLED Display
+
+* Compatible with 5V Fans
+
+* One-button interface for soft-shutdown and reboot
+
+* One-line script installation
+
+----------
+* PiDash-Control Top View
+![PiDash-Control Top View](pictures/iso_top_wt.png)
+
+* PiDash-Control Bottom View
+![PiDash-Control Bottom View](pictures/iso_bottom_wt.png)
+----------
 
 Hardware Installation
 ---------------------
@@ -23,11 +43,14 @@ Software Installation
 If you haven't, see the [Hardware Installation](#hardware-installation) section.
 
 This instructions are a *step-by-step guide* to install necessary software for the **PiDash-Control**.
-You can setup this via SSH or using the command line interface in your RetroPie. To enter the command line interface of RetroPie, *PRESS* ***F4*** just after booting up.
+You can setup this via SSH or using the command line interface.
 
 ----------
 
-Open your terminal and type the one-line installation command below:
+1. Run ```sudo raspi-config``` and follow the prompts to install i2c support for the ARM core and linux kernel.
+2. Go to Interfacing Options > I2C > Enable
+3. On the terminal, type the one-line command below (Case Sensitive):
+
 ```bash
 wget -O - "https://raw.githubusercontent.com/mafe72/PiDash-Control/master/install.sh" | sudo bash
 ```
@@ -41,7 +64,7 @@ Software Uninstall
 ---------------------
 
 This instructions are a *step-by-step guide* to uninstall necessary software for your **PiDash-Control**.
-You can setup this via SSH or using the command line interface in your RetroPie. To enter the command line interface of RetroPie, *PRESS* ***F4*** just after booting up.
+You can setup this via SSH or using the command line interface.
 
 ----------
 
