@@ -7,17 +7,18 @@ if [[ $EUID -ne 0 ]]; then
 fi
 #-----------------------------------------------------------
 
+DIR=/opt/PiDashControl
+RC=/etc/rc.local
+script="/opt/PiDashControl/pidashctrl.py"
+
+#-----------------------------------------------------------
 #Step 2) Remove Installation directory ---------------------
 
-cd /opt/
-sudo rm -r PiDashControl
+sudo rm -r $DIR
 
 #-----------------------------------------------------------
 
 #Step 3) Remove configuration script ------------
-cd /etc/
-RC=rc.local
-
 #Cleaning deprecated configration files --------------------
 echo Removing configration files from rc.local
 
@@ -28,7 +29,7 @@ fi
 
 #-----------------------------------------------------------
 #Step 4) Reboot to apply changes----------------------------
-echo "PiDash Control un-install complete. Will now reboot after 3 seconds."
+echo "PiDash Control un-install complete. Rebooting after 3 seconds."
 sleep 4
 sudo reboot
 #-----------------------------------------------------------
