@@ -212,6 +212,9 @@ while True:
                 draw.text((x, top),    ".......Reboot......."     , font=font, fill=255)
                 draw.text((x, top+12), "   Release Button   "   , font=font, fill=255)
                 draw.text((x, top+24), "      To Reboot     "    , font=font, fill=255)
+                GPIO.output(LED, GPIO.LOW)
+                time.sleep(1)
+                GPIO.output(LED, GPIO.HIGH)
 
         if menu_state == 2:
             if GPIO.input(INFO_BTN) == 1:
@@ -225,6 +228,7 @@ while True:
                 draw.text((x, top),    "......Shutdown......"     , font=font, fill=255)
                 draw.text((x, top+12), "   Release Button   "   , font=font, fill=255)
                 draw.text((x, top+24), "    To Shutdown     "      , font=font, fill=255)
+                GPIO.output(LED, GPIO.LOW)
 
         disp.image(image)
         disp.show()
