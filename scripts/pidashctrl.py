@@ -1,4 +1,4 @@
-####################################
+#####################################
 # PiDash Control Script
 #####################################
 # Hardware by Eladio Martinez
@@ -41,29 +41,18 @@ from PIL import Image, ImageDraw, ImageFont
 import adafruit_ssd1306
 import psutil
 
-##### Pin configuration #########
-
-FAN_CRTL = 4
-LED = 14
-INFO_BTN = 15
-
-################################
-
 GPIO.setmode(GPIO.BCM)
-GPIO.setup(FAN_CRTL, GPIO.OUT)
-GPIO.setup(LED, GPIO.OUT)
-GPIO.setup(INFO_BTN, GPIO.IN)
+GPIO.setup(4, GPIO.OUT)
+GPIO.setup(14, GPIO.OUT)
+GPIO.setup(20, GPIO.IN)
 
 DISP_OFF = 0xAE
 
-# Fan control settings
-fan = GPIO.PWM(FAN_CRTL, 50) #PWM freauency set to 50Hz
+# Raspberry Pi pin configuration:
+fan = GPIO.PWM(4, 50) #PWM freauency set to 50Hz
+INFO_BTN = 20
+LED = 14
 
-#Turn off fan when under
-minTEMP=40
-
-#Turn on fan when exceeded
-maxTEMP=55
 
 # Timer for Display timeout
 disp_timer = 0
@@ -128,9 +117,9 @@ GPIO.output(LED, GPIO.HIGH)
 
 # Startup Info
 draw.rectangle((0,0,width,height), outline=0, fill=0)
-draw.text((x, top),    "-"*20, font=font, fill=255)
+draw.text((x, top),    "--------------------", font=font, fill=255)
 draw.text((x, top+12), "   System Started   ", font=font, fill=255)
-draw.text((x, top+24), "-"*20, font=font, fill=255)
+draw.text((x, top+24), "--------------------", font=font, fill=255)
 disp.image(image)
 disp.show()
 
@@ -142,8 +131,8 @@ while True:
     #Adjust MIN and MAX TEMP as needed to keep the FAN from kicking
     #on and off with only a one second loop
     cpuTemp = int(float(getCPUtemp()))
-    fanOnTemp = maxTEMP  #Turn on fan when exceeded
-    fanOffTemp = minTEMP  #Turn off fan when under
+    fanOnTemp = 45  #Turn on fan when exceeded
+    fanOffTemp = 40  #Turn off fan when under
     if cpuTemp >= fanOnTemp:
     	fan.start(90) #90% duty cycle
     if cpuTemp < fanOffTemp:
@@ -176,8 +165,6 @@ while True:
             IP = subprocess.check_output(cmd, shell = True)
             cmd = "vcgencmd measure_temp |cut -f 2 -d '='"
             SysTemp = subprocess.check_output(cmd, shell = True)
-            dskpct = psutil.disk_usage('/')
-            disk = str(dskpct.percent)
             #cmd = "df -h | awk '$NF=="/"{printf "(%s)\n", $5}'"
             #disk = subprocess.check_output(cmd, shell = True).decode(UTF-8)
             
@@ -212,9 +199,6 @@ while True:
                 draw.text((x, top),    ".......Reboot......."     , font=font, fill=255)
                 draw.text((x, top+12), "   Release Button   "   , font=font, fill=255)
                 draw.text((x, top+24), "      To Reboot     "    , font=font, fill=255)
-                GPIO.output(LED, GPIO.LOW)
-                time.sleep(1)
-                GPIO.output(LED, GPIO.HIGH)
 
         if menu_state == 2:
             if GPIO.input(INFO_BTN) == 1:
@@ -228,7 +212,6 @@ while True:
                 draw.text((x, top),    "......Shutdown......"     , font=font, fill=255)
                 draw.text((x, top+12), "   Release Button   "   , font=font, fill=255)
                 draw.text((x, top+24), "    To Shutdown     "      , font=font, fill=255)
-                GPIO.output(LED, GPIO.LOW)
 
         disp.image(image)
         disp.show()
@@ -240,4 +223,3 @@ while True:
             cmd = "sudo shutdown now"
             subprocess.Popen(cmd, shell = True)
         time.sleep(1)
-
