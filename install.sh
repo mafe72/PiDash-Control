@@ -13,7 +13,7 @@ script=/opt/PiDashControl/pidashctrl.py
 SourcePath=https://raw.githubusercontent.com/mafe72/PiDash-Control/master/scripts
 
 #-----------------------------------------------------------
-#Step 2) Enable required services and Update repository-----
+#Step 2) Enable required services and update repository-----
 
 if grep -q "avoid_warnings=0" "$CNF";
         then
@@ -21,7 +21,7 @@ if grep -q "avoid_warnings=0" "$CNF";
 fi
 if grep -q "avoid_warnings=1" "$CNF";
         then
-                echo "warnings already disable. Doing nothing."
+                echo "warnings already disabled. Doing nothing."
         else
                 echo "avoid_warnings=1" >> "$CNF"
                 echo "warnings disable."
@@ -55,7 +55,7 @@ sudo apt-get update -y
 #-----------------------------------------------------------
 
 #Step 3) Install required modules----------------------------
-sudo apt-get install -y python3-pip python3-pil python3-gpiozero i2c-tools
+sudo apt-get install -y python3-pip python3-pip python3-gpiozero i2c-tools
 sudo pip3 install psutil pyserial adafruit-circuitpython-ssd1306 --break-system-packages
 #-----------------------------------------------------------
 
@@ -75,7 +75,21 @@ fi
 #-----------------------------------------------------------
 
 #Step 5) Enable Python script to run on start up------------
-#Adding new configuration----------- 
+# Ensure /etc/rc.local exists with basic structure----------
+if [ ! -f "$RC" ]; then
+    echo "Creating /etc/rc.local..."
+    {
+        echo "#!/bin/sh -e"
+        echo ""
+        echo "# rc.local"
+		echo ""
+		echo ""
+        echo "exit 0"
+    } > "$RC"
+    chmod +x "$RC"
+    echo "/etc/rc.local created with default content."
+fi
+# Adding new configuration----------- 
 if grep -q "sudo python3 \/opt\/PiDashControl\/pidashctrl.py \&" "$RC";
 	then
 		echo "Auto start  already configured. Doing nothing."
