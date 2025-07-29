@@ -18,16 +18,16 @@
 #####################################
 # Basic Usage:
 #  INFO_BTN Press
-#	Display show system information, IP, CPU load and current temperature and system uptime 
+#	Display system information, IP, CPU load and current temperature, and system uptime 
 #  INFO_BTN Hold 5 seconds
 #	System will reboot
 #  INFO_BTN Hold 10 seconds 
-#	System wil soft-shutdown
+#	The system will soft-shutdown
 #
 #  FAN ON
-#	Fan will turn ON when temperature exceeded 55C
+#	Fan will turn ON when the temperature exceeds 55 °C
 #  FAN OFF
-#	Fan will turn OFF when temperature under 40C
+#	Fan will turn OFF when the temperature is under 40 °C
 
 
 import time
@@ -45,7 +45,7 @@ import psutil
 
 FAN_CRTL = 4
 LED = 14
-INFO_BTN = 20
+INFO_BTN = 15
 
 ################################
 
@@ -59,10 +59,10 @@ DISP_OFF = 0xAE
 # Fan control settings
 fan = GPIO.PWM(FAN_CRTL, 50) #PWM freauency set to 50Hz
 
-#Turn off fan when under
+#Turn off the fan when under
 minTEMP=40
 
-#Turn on fan when exceeded
+#Turn on the fan when exceeded
 maxTEMP=55
 
 # Timer for Display timeout
@@ -91,31 +91,31 @@ disp.rotation = 2
 disp.fill(0)
 disp.show()
 
-# Create blank image for drawing.
-# Make sure to create image with mode '1' for 1-bit color.
+# Create a blank image for drawing.
+# Make sure to create an image with mode '1' for 1-bit color.
 width = disp.width
 height = disp.height
 image = Image.new("1", (width, height))
 
-# Get drawing object to draw on image.
+# Get the drawing object to draw on the image.
 draw = ImageDraw.Draw(image)
 
 # Draw a black filled box to clear the image.
 draw.rectangle((0, 0, width, height), outline=0, fill=0)
 
 # Draw some shapes.
-# First define some constants to allow easy resizing of shapes.
+# First, define some constants to allow easy resizing of shapes.
 padding = -2
 top = padding
 bottom = height - padding
-# Move left to right keeping track of the current x position for drawing shapes.
+# Move left to right, keeping track of the current x position for drawing shapes.
 x = 0
 
 # Load default font.
 font = ImageFont.load_default()
 
-# Alternatively load a TTF font.  Make sure the .ttf font file is in the
-# same directory as the python script!
+# Alternatively, load a TTF font.  Make sure the .ttf font file is in the
+# same directory as the Python script!
 # Some other nice fonts to try: http://www.dafont.com/bitmap.php
 # font = ImageFont.truetype('/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf', 9)
 
@@ -140,7 +140,7 @@ while True:
 
     #Fan control
     #Adjust MIN and MAX TEMP as needed to keep the FAN from kicking
-    #on and off with only a one second loop
+    #on and off with only a one-second loop
     cpuTemp = int(float(getCPUtemp()))
     fanOnTemp = maxTEMP  #Turn on fan when exceeded
     fanOffTemp = minTEMP  #Turn off fan when under
@@ -169,7 +169,7 @@ while True:
     if disp_timer > 0:
 
         if menu_state == 0:
-            # Shell scripts for system monitoring from here : https://unix.stackexchange.com/questions/119126/command-to-display-memory-usage-disk-usage-and-cpu-load
+            # Shell scripts for system monitoring from here: https://unix.stackexchange.com/questions/119126/command-to-display-memory-usage-disk-usage-and-cpu-load
             cmd = "hostname"
             HOSTNAME =  subprocess.check_output(cmd, shell = True)
             cmd = "hostname -I | cut -d\' \' -f1"
@@ -181,7 +181,7 @@ while True:
             #cmd = "df -h | awk '$NF=="/"{printf "(%s)\n", $5}'"
             #disk = subprocess.check_output(cmd, shell = True).decode(UTF-8)
             
-            # Examples of getting system information from psutil : https://www.thepythoncode.com/article/get-hardware-system-information-python#CPU_info
+            # Examples of getting system information from psutil: https://www.thepythoncode.com/article/get-hardware-system-information-python#CPU_info
             CPU = "{:3.0f}".format(psutil.cpu_percent())
             svmem = psutil.virtual_memory()
             MemUsage = "{:2.0f}".format(svmem.percent)
