@@ -56,7 +56,7 @@ sudo apt-get update -y
 
 #Step 3) Install required modules----------------------------
 sudo apt-get install -y python3-pip python3-pil python3-gpiozero i2c-tools
-sudo pip3 install psutil pyserial adafruit-circuitpython-ssd1306 --break-system-packages
+sudo pip3 install psutil pyserial smbus2 adafruit-circuitpython-ssd1306 --break-system-packages
 #-----------------------------------------------------------
 
 #Step 4) Download Python script-----------------------------
